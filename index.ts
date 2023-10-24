@@ -1,4 +1,5 @@
 import express, {Express} from "express";
+import sequelize from "./db_sequelize";
 import {config} from "dotenv";
 import cors from 'cors';
 
@@ -13,11 +14,13 @@ app.use(express.json());
 
 const start = async () => {
     try {
+        await sequelize.authenticate();
+        await sequelize.sync();
         app.listen(port, () => {
             console.log(`Server running at http://localhost:${port}`);
         })
-    } catch (e: any) {
-        console.log(e.message);
+    } catch (e) {
+        console.log(e);
     }
 }
 
