@@ -5,18 +5,22 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "serve": "tsc -w && nodemon dist/index.js"
+    "serve": "concurrently \"tsc -w\" \"nodemon dist/index.js\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "concurrently": "^8.2.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "mysql2": "^3.6.2",
+    "sequelize": "^6.33.0",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.15",
     "@types/express": "^4.17.20",
     "@types/node": "^20.8.7",
     "@types/nodemon": "^1.19.4",
