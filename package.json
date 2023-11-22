@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "serve": "concurrently \"tsc -w\" \"nodemon dist/index.js\""
+    "serve": "concurrently \"tsc -w\" \"nodemon dist/index.js\"",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx ,scss}\"",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -16,9 +18,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "mysql2": "^3.6.2",
-    "prettier": "^3.1.0",
-    "sequelize": "^6.33.0",
-    "typescript": "^5.2.2"
+    "sequelize": "^6.33.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.15",
@@ -28,6 +28,13 @@
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
     "eslint": "^8.54.0",
-    "nodemon": "^3.0.1"
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-standard-with-typescript": "^40.0.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-n": "^16.3.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.1.0",
+    "typescript": "^5.3.2"
   }
 }

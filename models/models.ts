@@ -1,5 +1,5 @@
-import sequelize from "../db_sequelize";
-import {Model , DataTypes} from "sequelize";
+import sequelize from '../db_sequelize';
+import { Model, DataTypes } from 'sequelize';
 
 class User extends Model {
     public userId!: number;
@@ -8,43 +8,44 @@ class User extends Model {
     public pole!: string;
 }
 
-class Words extends Model{
-    public wordId!:number;
+class Words extends Model {
+    public wordId!: number;
     public word!: string;
 }
 
-class Translations extends Model{
-    public translationId!:number;
-    public translation1! : string;
-    public translation2! : string;
+class Translations extends Model {
+    public translationId!: number;
+    public translation1!: string;
+    public translation2!: string;
 }
 
 User.init(
     {
-        userId : {
-            type : DataTypes.INTEGER,
+        userId: {
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
-        email : {
+        email: {
             type: DataTypes.STRING,
-            unique: true
+            unique: true,
         },
-        password : {
-            type : DataTypes.STRING
+        password: {
+            type: DataTypes.STRING,
         },
-        role : {
-            type : DataTypes.STRING,
-            defaultValue : "USER"
-        }
+        role: {
+            type: DataTypes.STRING,
+            defaultValue: 'USER',
+        },
     },
     {
         sequelize,
-        modelName : "user"
-    }
+        modelName: 'user',
+    },
 );
 
-Words.init({
+Words.init(
+    {
         wordId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -53,38 +54,41 @@ Words.init({
         word: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
-        }
+            unique: true,
+        },
     },
     {
         sequelize,
-        modelName: "words"
-    }
+        modelName: 'words',
+    },
 );
 
-Translations.init({
-    translationId : {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
+Translations.init(
+    {
+        translationId: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        translation1: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        translation2: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
     },
-    translation1 :{
-        type: DataTypes.STRING,
-        allowNull: false,
+    {
+        sequelize,
+        modelName: 'translations',
     },
-    translation2 :{
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-} , {
-    sequelize,
-    modelName: "translations"
-})
+);
 
-User.belongsToMany(Words, { through: "UserWords" });
-Words.belongsToMany(User, { through: "UserWords" });
+User.belongsToMany(Words, { through: 'UserWords' });
+Words.belongsToMany(User, { through: 'UserWords' });
 
-Words.hasOne(Translations, { foreignKey: "wordId", onDelete: "CASCADE" });
-Translations.belongsTo(Words, { foreignKey: "wordId" });
+Words.hasOne(Translations, { foreignKey: 'wordId', onDelete: 'CASCADE' });
+Translations.belongsTo(Words, { foreignKey: 'wordId' });
 
 export { User, Words, Translations };
