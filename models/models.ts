@@ -91,4 +91,4 @@ Words.belongsToMany(User, { through: 'UserWords' });
 Words.hasOne(Translations, { foreignKey: 'wordId', onDelete: 'CASCADE' });
 Translations.belongsTo(Words, { foreignKey: 'wordId' });
 
-export { User, Words, Translations };
+export default { User, Words, Translations };
