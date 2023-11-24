@@ -12,6 +12,14 @@ const generateJwt = (userId: number, email: string, role: string): string => {
     });
 };
 
+interface CustomRequest extends Request {
+    user: {
+        userId: number;
+        email: string;
+        role: string;
+    };
+}
+
 class UserController {
     async registration(req: Request, res: Response) {
         try {
@@ -51,6 +59,15 @@ class UserController {
 
         const token: string = generateJwt(user.userId, user.dataValues.email, user.dataValues.role);
         return res.status(200).json({ token });
+    }
+
+    async check(req: CustomRequest, res: Response) {
+        try {
+            const token: string = generateJwt(req.user.userId, req.user.email, req.user.role);
+            return res.status(200).json({ token });
+        } catch (e) {
+            res.status(404).json(e);
+        }
     }
 }
 
