@@ -34,6 +34,24 @@ class UserController {
             res.status(404).json(e);
         }
     }
+
+    async login(req: Request, res: Response) {
+        const { email, password } = req.body;
+        const user = await models.User.findOne({ where: { email } });
+
+        if (!user) {
+            return res.status(500).json({ message: 'Пользователь с таким email не существует!' });
+        }
+
+        const comparePassword: boolean = bcrypt.compareSync(String(password), String(user.dataValues.password));
+
+        if (!comparePassword) {
+            return res.status(500).json({ message: 'Указан неверный пароль' });
+        }
+
+        const token: string = generateJwt(user.userId, user.dataValues.email, user.dataValues.role);
+        return res.status(200).json({ token });
+    }
 }
 
 export default new UserController();

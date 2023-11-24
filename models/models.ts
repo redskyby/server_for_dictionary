@@ -35,7 +35,7 @@ User.init(
         },
         role: {
             type: DataTypes.STRING,
-            defaultValue: 'USER',
+            defaultValue: 'user',
         },
     },
     {
