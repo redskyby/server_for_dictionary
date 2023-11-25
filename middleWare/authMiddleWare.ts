@@ -4,7 +4,6 @@ import { config } from 'dotenv';
 
 config();
 
-
 interface User {
     userId: number;
     email: string;
