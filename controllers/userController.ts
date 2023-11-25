@@ -6,19 +6,11 @@ import { config } from 'dotenv';
 
 config();
 
-const generateJwt = (userId: number, email: string, role: string): string => {
-    return jwt.sign({ userId, email, role }, process.env.SECRET_KEY!, {
+const generateJwt =    (userId: number, email: string, role: string): string => {
+    return  jwt.sign({ userId, email, role }, process.env.SECRET_KEY!, {
         expiresIn: '1h',
     });
 };
-
-interface CustomRequest extends Request {
-    user: {
-        userId: number;
-        email: string;
-        role: string;
-    };
-}
 
 class UserController {
     async registration(req: Request, res: Response) {
@@ -36,7 +28,8 @@ class UserController {
 
             const hashPassword: string = await bcrypt.hash(password, 5);
             const user = await models.User.create({ email, role, password: hashPassword });
-            const token: string = generateJwt(user.userId, user.dataValues.email, user.dataValues.role);
+
+            const token: string =  generateJwt(user.userId, user.dataValues.email, user.dataValues.role);
             return res.status(200).json({ token });
         } catch (e) {
             res.status(404).json(e);
@@ -44,6 +37,7 @@ class UserController {
     }
 
     async login(req: Request, res: Response) {
+
         const { email, password } = req.body;
         const user = await models.User.findOne({ where: { email } });
 
@@ -57,11 +51,11 @@ class UserController {
             return res.status(500).json({ message: 'Указан неверный пароль' });
         }
 
-        const token: string = generateJwt(user.userId, user.dataValues.email, user.dataValues.role);
+        const token: string = generateJwt(user.dataValues.userId, user.dataValues.email, user.dataValues.role);
         return res.status(200).json({ token });
     }
 
-    async check(req: CustomRequest, res: Response) {
+    async check(req: Request, res: Response) {
         try {
             const token: string = generateJwt(req.user.userId, req.user.email, req.user.role);
             return res.status(200).json({ token });

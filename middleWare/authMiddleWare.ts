@@ -6,7 +6,8 @@ config();
 
 declare module 'express' {
     interface Request {
-        user?: unknown;
+        // user : {userId : number , email : string , role : string , iat? : string , exp? : string} ;
+        user : any ;
     }
 }
 export default function (req: Request, res: Response, next: NextFunction) {
@@ -19,6 +20,7 @@ export default function (req: Request, res: Response, next: NextFunction) {
             return res.status(401).json({ message: 'Не авторизован!' });
         }
         req.user = jwt.verify(token, process.env.SECRET_KEY!);
+        console.log(req.user);
         next();
     } catch (e) {
         res.status(401).json({ message: 'Не авторизован!' });
