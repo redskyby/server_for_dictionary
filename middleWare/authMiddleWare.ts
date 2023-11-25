@@ -4,10 +4,18 @@ import { config } from 'dotenv';
 
 config();
 
+
+interface User {
+    userId: number;
+    email: string;
+    role: string;
+    iat: number;
+    exp: number;
+}
+
 declare module 'express' {
     interface Request {
-        // user : {userId : number , email : string , role : string , iat? : string , exp? : string} ;
-        user : any ;
+        user?: User;
     }
 }
 export default function (req: Request, res: Response, next: NextFunction) {
@@ -19,8 +27,7 @@ export default function (req: Request, res: Response, next: NextFunction) {
         if (!token) {
             return res.status(401).json({ message: 'Не авторизован!' });
         }
-        req.user = jwt.verify(token, process.env.SECRET_KEY!);
-        console.log(req.user);
+        req.user = jwt.verify(token, process.env.SECRET_KEY!) as User;
         next();
     } catch (e) {
         res.status(401).json({ message: 'Не авторизован!' });
