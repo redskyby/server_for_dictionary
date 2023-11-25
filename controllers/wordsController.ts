@@ -36,6 +36,28 @@ class WordsController {
             res.status(404).json(e);
         }
     }
+
+    async getAll(req: Request, res: Response) {
+        try {
+            const { count } = req.query;
+            let words;
+            const countN : number = Number(count);
+
+            words = await models.Words.findAll({
+                limit: countN,
+                include: [
+                    {
+                        model: models.Translations,
+                        attributes: ['translation1', 'translation2', 'translationId'],
+                    },
+                ],
+            });
+
+            res.json({ words });
+        } catch (e) {
+            res.status(404).json(e);
+        }
+    }
 }
 
 export default new WordsController();
