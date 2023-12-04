@@ -13,7 +13,6 @@ class WordsController {
             const lowercaseWord: string = word.toLowerCase();
             const lowercaseTranslate: string = translate1.toLowerCase();
             const lowercaseThirdParam: string = translate2 ? translate2.toLowerCase() : undefined;
-
             const checkWordInDictionary = await models.Words.findOne({ where: { word: lowercaseWord } });
 
             if (checkWordInDictionary) {
@@ -40,10 +39,8 @@ class WordsController {
     async getAll(req: Request, res: Response) {
         try {
             const { count } = req.query;
-            let words;
-            const countN : number = Number(count);
-
-            words = await models.Words.findAll({
+            const countN: number = Number(count);
+            const words = await models.Words.findAll({
                 limit: countN,
                 include: [
                     {
@@ -52,7 +49,6 @@ class WordsController {
                     },
                 ],
             });
-
             res.json({ words });
         } catch (e) {
             res.status(404).json(e);
