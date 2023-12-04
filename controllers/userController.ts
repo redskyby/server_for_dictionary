@@ -1,14 +1,14 @@
-import { Request, Response } from 'express';
-import models from '../models/models';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { config } from 'dotenv';
+import { Request, Response } from "express";
+import models from "../models/models";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { config } from "dotenv";
 
 config();
 
 const generateJwt = (userId: number, email: string, role: string): string => {
     return jwt.sign({ userId, email, role }, process.env.SECRET_KEY!, {
-        expiresIn: '1h',
+        expiresIn: "1h",
     });
 };
 
@@ -18,12 +18,12 @@ class UserController {
             const { email, password, role } = req.body;
 
             if (!email || !password) {
-                return res.status(404).json({ message: 'Некорректный email или password!' });
+                return res.status(404).json({ message: "Некорректный email или password!" });
             }
             const candidate = await models.User.findOne({ where: { email } });
 
             if (candidate) {
-                return res.status(404).json({ message: 'Пользователь с таким email существует!' });
+                return res.status(404).json({ message: "Пользователь с таким email существует!" });
             }
 
             const hashPassword: string = await bcrypt.hash(password, 5);

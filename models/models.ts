@@ -1,5 +1,5 @@
-import sequelize from '../db_sequelize';
-import { Model, DataTypes } from 'sequelize';
+import sequelize from "../db_sequelize";
+import { Model, DataTypes } from "sequelize";
 
 class User extends Model {
     public userId!: number;
@@ -35,12 +35,12 @@ User.init(
         },
         role: {
             type: DataTypes.STRING,
-            defaultValue: 'user',
+            defaultValue: "user",
         },
     },
     {
         sequelize,
-        modelName: 'user',
+        modelName: "user",
     },
 );
 
@@ -59,7 +59,7 @@ Words.init(
     },
     {
         sequelize,
-        modelName: 'words',
+        modelName: "words",
     },
 );
 
@@ -81,14 +81,14 @@ Translations.init(
     },
     {
         sequelize,
-        modelName: 'translations',
+        modelName: "translations",
     },
 );
 
-User.belongsToMany(Words, { through: 'UserWords' });
-Words.belongsToMany(User, { through: 'UserWords' });
+User.belongsToMany(Words, { through: "UserWords" });
+Words.belongsToMany(User, { through: "UserWords" });
 
-Words.hasOne(Translations, { foreignKey: 'wordId', onDelete: 'CASCADE' });
-Translations.belongsTo(Words, { foreignKey: 'wordId' });
+Words.hasOne(Translations, { foreignKey: "wordId", onDelete: "CASCADE" });
+Translations.belongsTo(Words, { foreignKey: "wordId" });
 
 export default { User, Words, Translations };

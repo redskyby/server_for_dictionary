@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import models from '../models/models';
+import { Request, Response } from "express";
+import models from "../models/models";
 
 class WordsController {
     async create(req: Request, res: Response) {
@@ -7,7 +7,7 @@ class WordsController {
             const { word, translate1, translate2 } = req.body;
 
             if (!word || !translate1) {
-                return res.status(403).json({ message: 'Запрос должен содержать слово и его перевод!' });
+                return res.status(403).json({ message: "Запрос должен содержать слово и его перевод!" });
             }
 
             const lowercaseWord: string = word.toLowerCase();
@@ -16,7 +16,7 @@ class WordsController {
             const checkWordInDictionary = await models.Words.findOne({ where: { word: lowercaseWord } });
 
             if (checkWordInDictionary) {
-                return res.status(403).json({ message: 'Такое слово уже есть в словаре!' });
+                return res.status(403).json({ message: "Такое слово уже есть в словаре!" });
             }
 
             const wordInDictionary = await models.Words.create({ word: lowercaseWord });
@@ -45,7 +45,7 @@ class WordsController {
                 include: [
                     {
                         model: models.Translations,
-                        attributes: ['translation1', 'translation2', 'translationId'],
+                        attributes: ["translation1", "translation2", "translationId"],
                     },
                 ],
             });
