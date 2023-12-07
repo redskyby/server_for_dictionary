@@ -42,14 +42,19 @@ class WordsController {
             const countN: number = Number(count);
             const words = await models.Words.findAll({
                 limit: countN,
-                include: [
-                    {
-                        model: models.Translations,
-                        attributes: ["translation1", "translation2", "translationId"],
-                    },
-                ],
+                // include: [
+                //     {
+                //         model: models.Translations,
+                //         attributes: ["translationId","translation1", "translation2"],
+                //     },
+                // ],
             });
-            res.json({ words });
+
+            const translations = await models.Translations.findAll({
+                limit: countN,
+            });
+
+            res.json({ words, translations });
         } catch (e) {
             res.status(404).json(e);
         }

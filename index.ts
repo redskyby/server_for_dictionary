@@ -5,7 +5,7 @@ import cors from "cors";
 import routes from "./routes/index";
 //I don't know why but if I add models to await sequelize.sync(); between  brackets , sequelize creates a database.
 //Like that await sequelize.sync(models);
-//Bellow important import
+//Bellow an important import
 // import models from './models/models';
 
 config();
