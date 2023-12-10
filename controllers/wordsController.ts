@@ -49,12 +49,12 @@ class WordsController {
                 //     },
                 // ],
             });
-
             const translations = await models.Translations.findAll({
                 limit: countN,
             });
+            const totalCount = await models.Words.count();
 
-            res.json({ words, translations });
+            res.json({ words, translations, totalCount });
         } catch (e) {
             res.status(404).json(e);
         }
