@@ -38,10 +38,12 @@ class WordsController {
 
     async getAll(req: Request, res: Response) {
         try {
-            const { count } = req.query;
+            const { count, offset } = req.query;
             const countN: number = Number(count);
+            const offsetN: number | undefined = offset ? Number(offset) : undefined;
             const words = await models.Words.findAll({
                 limit: countN,
+                offset: offsetN,
                 // include: [
                 //     {
                 //         model: models.Translations,
