@@ -44,12 +44,6 @@ class WordsController {
             const words = await models.Words.findAll({
                 limit: countN,
                 offset: offsetN,
-                // include: [
-                //     {
-                //         model: models.Translations,
-                //         attributes: ["translationId","translation1", "translation2"],
-                //     },
-                // ],
             });
             const translations = await models.Translations.findAll({
                 limit: countN,
