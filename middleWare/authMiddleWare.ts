@@ -12,6 +12,8 @@ interface User {
     exp: number;
 }
 
+
+//  user?: User; was added to class Request.
 declare module "express" {
     interface Request {
         user?: User;
