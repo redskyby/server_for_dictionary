@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
+    "compilation" : "npx tsc",
     "serve": "concurrently \"tsc -w\" \"nodemon dist/index.js\"",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx ,scss}\"",
     "lint": "eslint ."
