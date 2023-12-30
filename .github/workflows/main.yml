@@ -8,7 +8,14 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    env:
+        DATABASE: ${{ secrets.DATABASE }}
+        USER: ${{ secrets.USER }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+        HOST: ${{ secrets.HOST }}
+        PORT_DB: ${{ secrets.PORT_DB }}
+        PORT : ${{secrets.PORT}}
+        SECRET_KEY : ${{secrets.SECRET_KEY}}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
