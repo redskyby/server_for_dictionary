@@ -31,5 +31,5 @@ jobs:
       - name: Compilation
         run: npm run compilation
 
-      - name: Serve
-        run: npm run serve
+#      - name: Serve
+#        run: npm run serve
