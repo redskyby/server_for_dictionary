@@ -55,6 +55,35 @@ class WordsController {
             res.status(404).json(e);
         }
     }
+
+    async put(req: Request, res: Response) {
+        try{
+            const {id , newWord , newtranslate } = req.query;
+
+            const word  = await models.Words.findOne({
+                where : {wordId : id}
+            })
+
+            if(!word){
+                return res.status(500).json({ message: "Нет такого слова." });
+            }
+            const translate  = await models.Translations.findOne({
+                where : {translationId : id}
+            })
+
+            const newWordInDataBase = await models.Words.update({
+                word :    newWord
+            })
+
+
+
+
+            return  res.json({word , translate});
+
+        } catch (e) {
+            res.status(403).json(e);
+        }
+    }
 }
 
 export default new WordsController();
