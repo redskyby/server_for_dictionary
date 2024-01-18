@@ -100,7 +100,7 @@ class WordsController {
         try {
             const { id } = req.query;
             const word = await models.Words.findOne({
-                where: { wordId: id }
+                where: { wordId: id },
             });
             if (!word) {
                 return res.status(500).json({ message: "Нет такого слова." });
