@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import models from "../models/models";
+import sequelize from "../db_sequelize";
 
 class WordsController {
     async create(req: Request, res: Response) {
@@ -60,6 +61,10 @@ class WordsController {
         try {
             const { id, newWord, newTranslate1, newTranslate2 = null } = req.query;
 
+            if (id === undefined || newWord === undefined || newTranslate1 === undefined) {
+                return res.status(403).json({ message: "Заполните все слова." });
+            }
+
             const word = await models.Words.findOne({
                 where: { wordId: id },
             });
@@ -68,7 +73,7 @@ class WordsController {
             });
 
             if (!word || !translate) {
-                return res.status(500).json({ message: "Нет такого слова." });
+                return res.status(403).json({ message: "Нет такого слова." });
             }
 
             const newWordInDataBase = await models.Words.update(
