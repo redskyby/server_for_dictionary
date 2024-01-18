@@ -57,29 +57,44 @@ class WordsController {
     }
 
     async put(req: Request, res: Response) {
-        try{
-            const {id , newWord , newtranslate } = req.query;
+        try {
+            const { id, newWord, newTranslate1, newTranslate2 = null } = req.query;
 
-            const word  = await models.Words.findOne({
-                where : {wordId : id}
-            })
+            const word = await models.Words.findOne({
+                where: { wordId: id },
+            });
+            const translate = await models.Translations.findOne({
+                where: { translationId: id },
+            });
 
-            if(!word){
+
+
+            if (!word || !translate) {
                 return res.status(500).json({ message: "Нет такого слова." });
             }
-            const translate  = await models.Translations.findOne({
-                where : {translationId : id}
-            })
-
-            const newWordInDataBase = await models.Words.update({
-                word :    newWord
-            })
 
 
+            const newWordInDataBase = await models.Words.update(
+                {
+                    word: newWord,
+                },
+                {
+                    where: { wordId: id },
+                },
+            );
+
+            const newTranslateInDataBase = await models.Translations.update(
+                {
+                    translation1: newTranslate1 ,
+                    translation2: newTranslate2
+                },
+                {
+                    where: { translationId: id },
+                },
+            );
 
 
-            return  res.json({word , translate});
-
+            return res.json({ newWordInDataBase, newTranslateInDataBase });
         } catch (e) {
             res.status(403).json(e);
         }
