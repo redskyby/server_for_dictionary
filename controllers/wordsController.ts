@@ -67,12 +67,9 @@ class WordsController {
                 where: { translationId: id },
             });
 
-
-
             if (!word || !translate) {
                 return res.status(500).json({ message: "Нет такого слова." });
             }
-
 
             const newWordInDataBase = await models.Words.update(
                 {
@@ -85,16 +82,35 @@ class WordsController {
 
             const newTranslateInDataBase = await models.Translations.update(
                 {
-                    translation1: newTranslate1 ,
-                    translation2: newTranslate2
+                    translation1: newTranslate1,
+                    translation2: newTranslate2,
                 },
                 {
                     where: { translationId: id },
                 },
             );
 
-
             return res.json({ newWordInDataBase, newTranslateInDataBase });
+        } catch (e) {
+            res.status(403).json(e);
+        }
+    }
+
+    async delete(req: Request, res: Response) {
+        try {
+            const { id } = req.query;
+            const word = await models.Words.findOne({
+                where: { wordId: id },
+            });
+            if (!word) {
+                return res.status(500).json({ message: "Нет такого слова." });
+            }
+
+            const deleteWord = await models.Words.destroy({
+                where: { wordId: id },
+            });
+
+            return res.json({ deleteWord });
         } catch (e) {
             res.status(403).json(e);
         }
