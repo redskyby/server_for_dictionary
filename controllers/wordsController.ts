@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import models from "../models/models";
-import sequelize from "../db_sequelize";
 
 class WordsController {
     async create(req: Request, res: Response) {
